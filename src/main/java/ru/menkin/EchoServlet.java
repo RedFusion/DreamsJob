@@ -53,12 +53,29 @@ public class EchoServlet extends HttpServlet {
     @Override
     protected void doPut(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.getWriter().write("<body>echo put %s<br></body>");
+        String id = req.getParameter("id");
+        String name = req.getParameter("name");
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            if (user.getId().equals(id)) {
+                users.get(i).setName(name);
+                break;
+            }
+        }
+        doGet(req, resp);
     }
 
     @Override
     protected void doDelete(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.getWriter().write("<body>echo delete %s<br></body>");
+        String id = req.getParameter("id");
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            if (user.getId().equals(id)) {
+                users.remove(i);
+                break;
+            }
+        }
+        doGet(req, resp);
     }
 }
